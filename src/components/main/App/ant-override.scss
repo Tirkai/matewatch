@@ -1,0 +1,23 @@
+.ant-input{
+    background: #2B2D31;
+}
+.ant-radio-button-wrapper, .ant-radio-button-wrapper-checked{
+    background: none;
+}
+.ant-radio-button-wrapper-disabled{
+    color: rgba(255,255,255,0.25);
+    &:hover{
+        background: none;
+        cursor: default;
+        color: rgba(255,255,255,0.25);
+    }
+}
+.ant-modal-content{
+    background: #36393F;
+}
+.ant-modal-footer{
+    border: none;
+}
+.ant-modal-close-x{
+    color: white;
+}
