@@ -1,17 +1,19 @@
 import React, { Component } from 'react'
 import IPopup from 'interfaces/IPopup';
 import IStoreInjector from 'interfaces/IStoreInjector';
-import { Modal, Input, Button, Form, Radio } from 'antd';
+import { Modal, Button } from 'antd';
 import FormItem from 'components/common/FormItem/FormItem';
 import SectionTitle from 'components/common/SectionTitle/SectionTitle';
 import { computed } from 'mobx';
 import { inject, observer } from 'mobx-react';
+import { Formik } from 'formik';
+import { Input, Radio, SubmitButton, Form } from "@jbuschke/formik-antd";
 
 @inject('store') @observer
 export class RoomCreatePopup extends Component<IStoreInjector>{
-    
+
     @computed
-    get roomCreateStore(){
+    get roomCreateStore() {
         return this.props.store.roomCreate;
     }
 
@@ -21,20 +23,26 @@ export class RoomCreatePopup extends Component<IStoreInjector>{
         return (
             <Modal visible={this.roomCreateStore.isShowCreatePopup} footer={null} onCancel={this.handleClose}>
                 <SectionTitle title="Создание комнаты"></SectionTitle>
-                <Form>
-                    <FormItem label="Тип">
-                        <Radio.Group size="large" defaultValue="youtube" buttonStyle="solid">
-                            <Radio.Button value="youtube">Youtube</Radio.Button>
-                            <Radio.Button value="soon" disabled>Magnet (soon)</Radio.Button>
-                        </Radio.Group>
-                    </FormItem>
-                    <FormItem label="Ссылка на источник">
-                        <Input size="large" placeholder="http://"></Input>
-                    </FormItem>
-                    <FormItem>
-                        <Button type="primary" size="large">Создать</Button>
-                    </FormItem>
-                </Form>
+                <Formik
+                    initialValues={{type: "youtube", source: ""}}
+                    onSubmit={(values) => console.log(values)}
+                    render={() => (
+                        <Form>
+                            <FormItem label="Тип">
+                                <Radio.Group name="type" size="large" buttonStyle="solid">
+                                    <Radio.Button value="youtube">Youtube</Radio.Button>
+                                    <Radio.Button value="soon" disabled>Magnet (soon)</Radio.Button>
+                                </Radio.Group>
+                            </FormItem>
+                            <FormItem label="Ссылка на источник">
+                                <Input name="source" size="large" placeholder="http://"></Input>
+                            </FormItem>
+                            <FormItem>
+                                <SubmitButton type="primary" size="large">Создать</SubmitButton>
+                            </FormItem>
+                        </Form>
+                    )}
+                />
             </Modal>
         )
     }
